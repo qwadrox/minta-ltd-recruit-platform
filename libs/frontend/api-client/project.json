@@ -1,0 +1,20 @@
+{
+  "name": "api-client",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/api-client/src",
+  "projectType": "library",
+  "targets": {
+    "generate-sources": {
+      "executor": "@driimus/nx-plugin-openapi:generate-api-lib-sources",
+      "options": {
+        "useDockerBuild": false,
+        "generator": "typescript-angular",
+        "sourceSpecPathOrUrl": "http://localhost:3000/api-yaml",
+        "additionalProperties": "",
+        "globalProperties": ""
+      }
+    }
+  },
+
+  "tags": ["type:data-access"]
+}

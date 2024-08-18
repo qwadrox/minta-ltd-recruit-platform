@@ -14,7 +14,23 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@minta-ltd-recruit-platform/api-client": [
+        "libs/frontend/api-client/src/index.ts"
+      ],
+      "@minta-ltd-recruit-platform/home/data-access": [
+        "libs/frontend/home/data-access/src/index.ts"
+      ],
+      "@minta-ltd-recruit-platform/home/feature": [
+        "libs/frontend/home/feature/src/index.ts"
+      ],
+      "@minta-ltd-recruit-platform/home/ui": [
+        "libs/frontend/home/ui/src/index.ts"
+      ],
+      "@minta-ltd-recruit-platform/home/util": [
+        "libs/frontend/home/util/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

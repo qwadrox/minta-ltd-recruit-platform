@@ -1,0 +1,26 @@
+{
+  "name": "util",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/home/util/src",
+  "projectType": "library",
+  "tags": ["type:util"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/frontend/home/util",
+        "main": "libs/frontend/home/util/src/index.ts",
+        "tsConfig": "libs/frontend/home/util/tsconfig.lib.json",
+        "assets": ["libs/frontend/home/util/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/frontend/home/util/jest.config.ts"
+      }
+    }
+  }
+}
