@@ -4,13 +4,10 @@ export const appRoutes: Route[] = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: 'home',
-    loadComponent: () =>
-      import('@minta-ltd-recruit-platform/home/feature').then(
-        (m) => m.HomeComponent
-      ),
-  },
+    loadComponent: () => import('@minta-ltd-recruit-platform/home/feature').then((m) => m.HomeComponent)
+  }
 ];

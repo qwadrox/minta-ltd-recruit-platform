@@ -7,6 +7,6 @@ import { EmailModule } from './email/email.module';
 @Module({
   imports: [OpenaiModule, EmailModule],
   controllers: [NotificationsController],
-  providers: [],
+  providers: []
 })
 export class AppModule {}

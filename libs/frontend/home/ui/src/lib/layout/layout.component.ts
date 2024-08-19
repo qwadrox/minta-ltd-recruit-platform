@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'lib-layout',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './layout.component.html',
+  templateUrl: './layout.component.html'
 })
 export class LayoutComponent {
   mobileMenuOpen = input.required<boolean>();

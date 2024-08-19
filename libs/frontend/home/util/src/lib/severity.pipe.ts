@@ -2,12 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'severity',
-  standalone: true,
+  standalone: true
 })
 export class SeverityPipe implements PipeTransform {
-  transform(
-    value: string
-  ): 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' {
+  transform(value: string): 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' {
     switch (value) {
       case 'SignedUp':
         return 'success';

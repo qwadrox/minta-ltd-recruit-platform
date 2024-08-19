@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 import { Candidate } from './interfaces/candidate.interface';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class CandidateApiService {
   constructor(private http: HttpClient) {}
@@ -14,7 +14,7 @@ export class CandidateApiService {
       map((candidates) =>
         candidates.map((candidate) => ({
           ...candidate,
-          dateOfApplication: new Date(candidate.dateOfApplication),
+          dateOfApplication: new Date(candidate.dateOfApplication)
         }))
       )
     );
@@ -29,9 +29,6 @@ export class CandidateApiService {
   }
 
   updateCandidate(candidate: Candidate): Observable<Candidate> {
-    return this.http.put<Candidate>(
-      `api/candidates/${candidate.id}`,
-      candidate
-    );
+    return this.http.put<Candidate>(`api/candidates/${candidate.id}`, candidate);
   }
 }

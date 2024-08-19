@@ -1,9 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
-import {
-  ApplicationConfig,
-  importProvidersFrom,
-  provideZoneChangeDetection,
-} from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { BASE_PATH } from '@minta-ltd-recruit-platform/api-client';
@@ -20,9 +16,9 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       InMemoryWebApiModule.forRoot(InMemoryCandidateDbService, {
         delay: 600,
-        passThruUnknownUrl: true,
+        passThruUnknownUrl: true
       })
     ),
-    { provide: BASE_PATH, useValue: 'http://localhost:3000' },
-  ],
+    { provide: BASE_PATH, useValue: 'http://localhost:3000' }
+  ]
 };

@@ -11,7 +11,7 @@ export class CreateNotificationDto {
   @ApiProperty({
     description: 'Status of the event',
     enum: StatusType,
-    enumName: 'StatusType',
+    enumName: 'StatusType'
   })
   @IsEnum(StatusType)
   @IsNotEmpty()

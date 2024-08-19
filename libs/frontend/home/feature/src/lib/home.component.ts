@@ -1,25 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import {
-  CreateNotificationDto,
-  NotificationsService,
-  StatusType,
-} from '@minta-ltd-recruit-platform/api-client';
-import {
-  Candidate,
-  CandidateApiService,
-} from '@minta-ltd-recruit-platform/home/data-access';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateNotificationDto, NotificationsService, StatusType } from '@minta-ltd-recruit-platform/api-client';
+import { Candidate, CandidateApiService } from '@minta-ltd-recruit-platform/home/data-access';
 import { LayoutComponent } from '@minta-ltd-recruit-platform/home/ui';
-import {
-  SeverityPipe,
-  StatusValuePipe,
-} from '@minta-ltd-recruit-platform/home/util';
+import { SeverityPipe, StatusValuePipe } from '@minta-ltd-recruit-platform/home/util';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -31,15 +16,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import {
-  BehaviorSubject,
-  forkJoin,
-  Observable,
-  of,
-  shareReplay,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'lib-home',
@@ -60,10 +37,11 @@ import {
     TagModule,
     SeverityPipe,
     StatusValuePipe,
-    ToastModule,
+    ToastModule
   ],
   providers: [MessageService],
   templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
   private refreshSubject = new BehaviorSubject<void>(undefined);
@@ -98,21 +76,19 @@ export class HomeComponent {
     position: new FormControl<string>(''),
     email: new FormControl<string>(''),
     status: new FormControl<StatusType>(StatusType.InterviewRound1),
-    dateOfApplication: new FormControl<Date>(new Date()),
+    dateOfApplication: new FormControl<Date>(new Date())
   });
 
   readonly statuses = Object.entries(StatusType).map(([key, value]) => ({
     label: value,
-    value: key,
+    value: key
   }));
   mobileMenuToggle() {
     this.mobileMenuOpen.set(!this.mobileMenuOpen());
   }
 
   deleteSelectedCandidates() {
-    const deleteObservables = this.selectedCandidates()?.map((candidate) =>
-      this.candidateApiService.deleteCandidate(candidate.id)
-    );
+    const deleteObservables = this.selectedCandidates()?.map((candidate) => this.candidateApiService.deleteCandidate(candidate.id));
 
     if (!deleteObservables || deleteObservables.length === 0) {
       return;
@@ -122,7 +98,7 @@ export class HomeComponent {
       next: () => {
         this.refreshCandidates();
         this.selectedCandidates.set(null);
-      },
+      }
     });
   }
 
@@ -149,11 +125,9 @@ export class HomeComponent {
                 name: candidate.name,
                 status: candidate.status,
                 position: candidate.position,
-                email: candidate.email,
+                email: candidate.email
               };
-              return this.notificationsService.notificationsControllerGetPersonalizedNotification(
-                create
-              );
+              return this.notificationsService.notificationsControllerGetPersonalizedNotification(create);
             }
             return of(null);
           })
@@ -165,7 +139,7 @@ export class HomeComponent {
                 severity: 'success',
                 summary: 'AI generated personalized notification',
                 detail: res.message,
-                life: 999999,
+                life: 999999
               });
             }
           },
@@ -173,9 +147,9 @@ export class HomeComponent {
             this.messageService.add({
               severity: 'error',
               summary: 'Error generating personalized notification',
-              detail: err.message,
+              detail: err.message
             });
-          },
+          }
         });
     } else {
       this.candidateApiService.saveCandidate(candidate).subscribe(() => {

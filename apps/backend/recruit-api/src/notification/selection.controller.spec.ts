@@ -6,7 +6,7 @@ describe('SelectionController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [NotificationController],
+      controllers: [NotificationController]
     }).compile();
 
     controller = module.get<NotificationController>(NotificationController);

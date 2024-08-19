@@ -16,21 +16,15 @@ async function bootstrap() {
 
   app.enableCors({
     origin: 'http://localhost:4200', // Allow requests from Angular
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
   });
 
-  const config = new DocumentBuilder()
-    .setTitle('Recruit API')
-    .setDescription('API for recruitment platform')
-    .setVersion('1.0')
-    .build();
+  const config = new DocumentBuilder().setTitle('Recruit API').setDescription('API for recruitment platform').setVersion('1.0').build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
   await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
 }
 
 bootstrap();

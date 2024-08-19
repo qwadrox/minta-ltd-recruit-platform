@@ -3,7 +3,7 @@ import { StatusType } from '@minta-ltd-recruit-platform/api-client';
 
 @Pipe({
   name: 'statusValue',
-  standalone: true,
+  standalone: true
 })
 export class StatusValuePipe implements PipeTransform {
   transform(key: string): StatusType {

@@ -1,20 +1,9 @@
-<lib-layout
-  [mobileMenuOpen]="mobileMenuOpen()"
-  (mobileMenuToggle)="mobileMenuToggle()"
->
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 bg-white shadow"
-  >
+<lib-layout [mobileMenuOpen]="mobileMenuOpen()" (mobileMenuToggle)="mobileMenuToggle()">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 bg-white shadow">
     <div class="col-span-4">
       <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
-          <p-button
-            severity="success"
-            label="New"
-            icon="pi pi-plus"
-            class="mr-2"
-            (onClick)="openAddDialog()"
-          />
+          <p-button severity="success" label="New" icon="pi pi-plus" class="mr-2" (onClick)="openAddDialog()" />
           <p-button
             severity="danger"
             label="Delete"
@@ -22,6 +11,10 @@
             (onClick)="deleteSelectedCandidates()"
             [disabled]="!selectedCandidates() || !selectedCandidates()?.length"
           />
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <p-button severity="info" icon="pi pi-refresh" (onClick)="refreshCandidates()" />
         </ng-template>
       </p-toolbar>
 
@@ -53,11 +46,7 @@
             <th pSortableColumn="experience">
               <div class="flex gap-2 items-center">
                 Tapasztalat (év)
-                <p-columnFilter
-                  type="numeric"
-                  field="experience"
-                  display="menu"
-                />
+                <p-columnFilter type="numeric" field="experience" display="menu" />
                 <p-sortIcon field="code" />
               </div>
             </th>
@@ -78,27 +67,11 @@
             <th pSortableColumn="status">
               <div class="flex gap-2 items-center">
                 Státusz
-                <p-columnFilter
-                  field="status"
-                  matchMode="equals"
-                  display="menu"
-                >
-                  <ng-template
-                    pTemplate="filter"
-                    let-value
-                    let-filter="filterCallback"
-                  >
-                    <p-dropdown
-                      [ngModel]="value"
-                      [options]="statuses"
-                      (onChange)="filter($event.value)"
-                      placeholder="Any"
-                    >
+                <p-columnFilter field="status" matchMode="equals" display="menu">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
                       <ng-template let-option pTemplate="item">
-                        <p-tag
-                          [value]="option.label"
-                          [severity]="option.value | severity"
-                        />
+                        <p-tag [value]="option.label" [severity]="option.value | severity" />
                       </ng-template>
                     </p-dropdown>
                   </ng-template>
@@ -109,11 +82,7 @@
             <th pSortableColumn="dateOfApplication">
               <div class="flex gap-2 items-center">
                 Jelentkezés dátuma
-                <p-columnFilter
-                  type="date"
-                  field="dateOfApplication"
-                  display="menu"
-                />
+                <p-columnFilter type="date" field="dateOfApplication" display="menu" />
                 <p-sortIcon field="code" />
               </div>
             </th>
@@ -130,24 +99,12 @@
             <td>{{ candidate.position }}</td>
             <td>{{ candidate.email }}</td>
             <td>
-              <p-tag
-                [value]="candidate.status | statusValue"
-                [severity]="candidate.status | severity"
-              />
+              <p-tag [value]="candidate.status | statusValue" [severity]="candidate.status | severity" />
             </td>
             <td>{{ candidate.dateOfApplication | date : 'yyyy.MM.dd' }}</td>
             <td>
-              <p-button
-                icon="pi pi-pencil"
-                class="mr-2"
-                severity="success"
-                (onClick)="editRow(candidate)"
-              />
-              <p-button
-                icon="pi pi-trash"
-                severity="danger"
-                (onClick)="deleteRow(candidate)"
-              />
+              <p-button icon="pi pi-pencil" class="mr-2" severity="success" (onClick)="editRow(candidate)" />
+              <p-button icon="pi pi-trash" severity="danger" (onClick)="deleteRow(candidate)" />
             </td>
           </tr>
         </ng-template>
@@ -156,103 +113,45 @@
   </div>
 </lib-layout>
 
-<p-dialog
-  [(visible)]="candidateDialog"
-  [style]="{ width: '450px' }"
-  header="Candidate"
-  [modal]="true"
-  styleClass="p-fluid"
->
+<p-dialog [(visible)]="candidateDialog" [style]="{ width: '450px' }" header="Candidate" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <form [formGroup]="candidateForm">
       <div class="flex flex-col gap-4">
         <div class="flex flex-col gap-2">
           <label class="font-bold" for="name">Név</label>
-          <input
-            type="text"
-            pInputText
-            id="name"
-            formControlName="name"
-            required
-            autofocus
-          />
-          <small
-            class="p-error"
-            *ngIf="
-              candidateForm.controls.name.touched &&
-              !candidateForm.controls.name.value
-            "
-          >
+          <input type="text" pInputText id="name" formControlName="name" required autofocus />
+          <small class="p-error" *ngIf="candidateForm.controls.name.touched && !candidateForm.controls.name.value">
             Név megadása kötelező
           </small>
         </div>
 
         <div class="flex flex-col gap-2">
           <label class="font-bold" for="experience">Tapasztalat (év)</label>
-          <p-inputNumber
-            [showButtons]="true"
-            id="experience"
-            formControlName="experience"
-            required
-          />
-          <small
-            class="p-error"
-            *ngIf="
-              candidateForm.controls.experience.touched &&
-              !candidateForm.controls.experience.value
-            "
-          >
+          <p-inputNumber [showButtons]="true" id="experience" formControlName="experience" required />
+          <small class="p-error" *ngIf="candidateForm.controls.experience.touched && !candidateForm.controls.experience.value">
             Tapasztalat megadása kötelező
           </small>
         </div>
 
         <div class="flex flex-col gap-2">
           <label class="font-bold" for="position">Pozíció</label>
-          <input
-            type="text"
-            pInputText
-            id="position"
-            formControlName="position"
-            required
-          />
-          <small
-            class="p-error"
-            *ngIf="
-              candidateForm.controls.position.touched &&
-              !candidateForm.controls.position.value
-            "
-          >
+          <input type="text" pInputText id="position" formControlName="position" required />
+          <small class="p-error" *ngIf="candidateForm.controls.position.touched && !candidateForm.controls.position.value">
             Pozíció megadása kötelező
           </small>
         </div>
 
         <div class="flex flex-col gap-2">
           <label class="font-bold" for="email">Email cím</label>
-          <input
-            type="text"
-            pInputText
-            id="email"
-            formControlName="email"
-            required
-          />
-          <small
-            class="p-error"
-            *ngIf="
-              candidateForm.controls.email.touched &&
-              !candidateForm.controls.email.value
-            "
-          >
+          <input type="text" pInputText id="email" formControlName="email" required />
+          <small class="p-error" *ngIf="candidateForm.controls.email.touched && !candidateForm.controls.email.value">
             Email cím megadása kötelező
           </small>
         </div>
 
         <div class="flex flex-col gap-2">
           <label class="font-bold" for="status">Státusz</label>
-          <p-dropdown
-            formControlName="status"
-            inputId="inventoryStatus"
-            [options]="statuses"
-          >
+          <p-dropdown formControlName="status" inputId="inventoryStatus" [options]="statuses" [overlayOptions]="{ appendTo: 'body' }">
             <ng-template pTemplate="selectedItem">
               <p-tag
                 [value]="candidateForm.controls.status.value! | statusValue"
@@ -260,38 +159,20 @@
               />
             </ng-template>
             <ng-template let-option pTemplate="item">
-              <p-tag
-                [value]="option.label"
-                [severity]="option.value | severity"
-              />
+              <p-tag [value]="option.label" [severity]="option.value | severity" />
             </ng-template>
           </p-dropdown>
-          <small
-            class="p-error"
-            *ngIf="
-              candidateForm.controls.status.touched &&
-              !candidateForm.controls.status.value
-            "
-          >
+          <small class="p-error" *ngIf="candidateForm.controls.status.touched && !candidateForm.controls.status.value">
             Státusz megadása kötelező
           </small>
         </div>
 
         <div class="flex flex-col gap-2">
-          <label class="font-bold" for="dateOfApplication"
-            >Jelentkezés dátuma</label
-          >
-          <p-calendar
-            formControlName="dateOfApplication"
-            dateFormat="yy.mm.dd"
-            required
-          />
+          <label class="font-bold" for="dateOfApplication">Jelentkezés dátuma</label>
+          <p-calendar formControlName="dateOfApplication" dateFormat="yy.mm.dd" required />
           <small
             class="p-error"
-            *ngIf="
-              candidateForm.controls.dateOfApplication.touched &&
-              !candidateForm.controls.dateOfApplication.value
-            "
+            *ngIf="candidateForm.controls.dateOfApplication.touched && !candidateForm.controls.dateOfApplication.value"
           >
             Jelentkezés dátuma megadása kötelező
           </small>
@@ -301,20 +182,9 @@
   </ng-template>
 
   <ng-template pTemplate="footer">
-    <p-button
-      label="Cancel"
-      icon="pi pi-times"
-      [text]="true"
-      (onClick)="hideDialog()"
-    />
-    <p-button
-      [disabled]="candidateForm.invalid"
-      label="Save"
-      icon="pi pi-check"
-      [text]="true"
-      (onClick)="saveOrUpdateCandidate()"
-    />
+    <p-button label="Cancel" icon="pi pi-times" [text]="true" (onClick)="hideDialog()" />
+    <p-button [disabled]="candidateForm.invalid" label="Save" icon="pi pi-check" [text]="true" (onClick)="saveOrUpdateCandidate()" />
   </ng-template>
 </p-dialog>
 
-<p-toast/>
+<p-toast />
